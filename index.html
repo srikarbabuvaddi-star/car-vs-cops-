@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CHASELINE: LAST EXIT — Arcade Pursuit Survival</title>
+  <meta name="description" content="Experience high-octane top-down arcade pursuit survival. Outmaneuver relentless tactical pursuit units across 100 high-stakes escape sectors.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Cockpit HUD Frame & Scanline Elements -->
+  <div class="global-scanlines" id="globalScanlines" style="display: none;"></div>
+  <div class="cockpit-hud-overlay" id="cockpitHudOverlay" style="display: none;">
+    <div class="hud-corner top-left"></div>
+    <div class="hud-corner top-right"></div>
+    <div class="hud-corner bottom-left"></div>
+    <div class="hud-corner bottom-right"></div>
+    <div class="hud-crosshair"></div>
+  </div>
+
+  <!-- Live Operational Status Ticker -->
+  <aside class="operational-ticker" aria-label="Tactical Status Ticker">
+    <div class="ticker-track">
+      <div class="ticker-item"><span class="ticker-dot pulse-red"></span> LIVE PURSUIT SECTOR 01: ESCAPE ROUTE ACTIVE</div>
+      <div class="ticker-item"><span class="ticker-badge gold">WANTED RATING</span> MAXIMUM 5-STAR TACTICAL MOBILIZATION</div>
+      <div class="ticker-item"><span class="ticker-badge cyan">RADAR TELEMETRY</span> HIGH-CONTRAST SAT-LINK SYNCHRONIZED</div>
+      <div class="ticker-item"><span class="ticker-badge green">DEFENSE PROTOCOL</span> KINETIC IMPACT SHIELDS ON STANDBY</div>
+      <div class="ticker-item"><span class="ticker-badge red">WARNING</span> AVOID MULTI-CRUISER PINCER FORMATIONS</div>
+      <!-- Duplicate for seamless infinite marquee -->
+      <div class="ticker-item"><span class="ticker-dot pulse-red"></span> LIVE PURSUIT SECTOR 01: ESCAPE ROUTE ACTIVE</div>
+      <div class="ticker-item"><span class="ticker-badge gold">WANTED RATING</span> MAXIMUM 5-STAR TACTICAL MOBILIZATION</div>
+      <div class="ticker-item"><span class="ticker-badge cyan">RADAR TELEMETRY</span> HIGH-CONTRAST SAT-LINK SYNCHRONIZED</div>
+      <div class="ticker-item"><span class="ticker-badge green">DEFENSE PROTOCOL</span> KINETIC IMPACT SHIELDS ON STANDBY</div>
+      <div class="ticker-item"><span class="ticker-badge red">WARNING</span> AVOID MULTI-CRUISER PINCER FORMATIONS</div>
+    </div>
+  </aside>
+
+  <!-- Header & Navigation -->
+  <header class="site-header" id="mainHeader">
+    <div class="nav-container">
+      <div class="brand">
+        <span class="brand-badge">TACTICAL ARCADE</span>
+        <h1 class="brand-title">CHASELINE<span> // LAST EXIT</span></h1>
+      </div>
+      <nav class="nav-links">
+        <a href="#overview" class="nav-link active">Overview</a>
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#radar" class="nav-link">Playable Radar</a>
+        <a href="#garage" class="nav-link">Garage</a>
+        <a href="#audio" class="nav-link">Audio Lab</a>
+        <a href="#controls" class="nav-link">Briefing</a>
+      </nav>
+      <div class="header-action">
+        <button class="btn-toggle-hud" id="toggleHudMode" title="Toggle Cockpit HUD Mode">
+          <span class="hud-icon">⚡</span> COCKPIT HUD
+        </button>
+        <button class="btn-toggle-scanlines" id="toggleScanlines" title="Toggle CRT Scanlines">
+          <span class="scan-icon">📺</span> SCANLINES
+        </button>
+        <a href="#radar" class="btn-primary glow-cyan">PLAY SIMULATOR</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section" id="overview">
+    <div class="hero-backdrop"></div>
+    <div class="hero-grid-lines"></div>
+    <div class="hero-container">
+      <div class="hero-badge">OFFICIAL RELEASE</div>
+      <h2 class="hero-headline">OUTRUN. OUTLAST.<br><span class="gradient-text">ESCAPE THE PURSUIT.</span></h2>
+      <p class="hero-subtext">
+        Engage in high-stakes vehicular survival across 100 intense escape sectors. 
+        Maneuver through wide city avenues, garden districts, and dense roadblocks 
+        while baiting pursuing cruisers into explosive tactical collisions.
+      </p>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <span class="stat-value">100</span>
+          <span class="stat-label">Escape Sectors</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value">10</span>
+          <span class="stat-label">Heat Escalation Tiers</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value">x10</span>
+          <span class="stat-label">Escape Chain Multiplier</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value">V8</span>
+          <span class="stat-label">Acoustic Exhaust Pulse</span>
+        </div>
+      </div>
+      <div class="hero-cta-group">
+        <a href="#radar" class="btn-cta glow-gold">ENTER SIMULATOR</a>
+        <a href="#garage" class="btn-secondary">INSPECT VEHICLES</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Features Grid -->
+  <section class="section-padding" id="features">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-tag">MISSION CAPABILITIES</span>
+        <h3 class="section-title">ENGINEERED FOR SUPREME ADRENALINE</h3>
+        <p class="section-desc">Every element is crafted to provide instant feedback, authentic physics, and uncompromising clarity.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="card-icon cyan-icon">⚡</div>
+          <h4 class="card-title">Dynamic Evasion Drift Physics</h4>
+          <p class="card-text">
+            Master precise counter-steering, momentum slips, and nitro burn bursts. 
+            Narrowly slide past pursuit vehicles to trigger time-dilation slow-motion and build massive score multipliers.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="card-icon gold-icon">💥</div>
+          <h4 class="card-title">Tactical Collision Blasts</h4>
+          <p class="card-text">
+            Turn the enemy's numbers against them. Bait pursuit units into dashing into each other 
+            to ignite massive multi-vehicle explosions, clearing roadblocks and awarding huge point bonuses.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="card-icon green-icon">🌳</div>
+          <h4 class="card-title">Garden Park Environments</h4>
+          <p class="card-text">
+            Navigate between 20-meter multi-lane highways and lush municipal garden sectors 
+            complete with manicured lawns, concrete sidewalks, perimeter hedges, and decorative park vegetation.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="card-icon red-icon">🚨</div>
+          <h4 class="card-title">Reality-Accurate Acoustic Audio</h4>
+          <p class="card-text">
+            Hear the throbbing roar of a physical V8 engine firing pulses under heavy throttle, 
+            paired with authentic emergency response acoustic speaker horns shifting dynamically between pursuit Wail and urgent Yelp.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="card-icon blue-icon">🛰</div>
+          <h4 class="card-title">High-Contrast Tactical Radar</h4>
+          <p class="card-text">
+            Full situational awareness powered by a clean, high-contrast radar display. 
+            Tracks road avenues, perimeter boundaries, field-of-view sightlines, and active search zones with GPS waypointing.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="card-icon purple-icon">🛡</div>
+          <h4 class="card-title">Energy Shields & Ordnance</h4>
+          <p class="card-text">
+            Collect power cells across the asphalt to replenish nitro, deploy kinetic EMP disruption fields, 
+            or activate heavy impact shields that absorb lethal pursuit collisions.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Tactical Radar Showcase & Playable Simulator -->
+  <section class="section-padding dark-plate" id="radar">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-tag">PLAYABLE TACTICAL DECK</span>
+        <h3 class="section-title">HIGH-CONTRAST RADAR // COMBAT SIMULATOR</h3>
+        <p class="section-desc">Take the wheel directly in your browser. Steer, drift with handbrake, trigger nitro bursts, and bait pursuing cruisers into catastrophic head-on blasts.</p>
+      </div>
+
+      <!-- Cockpit Status Strip -->
+      <div class="cockpit-status-bar">
+        <div class="status-cell">
+          <span class="cell-label">WANTED LEVEL</span>
+          <div class="wanted-stars" id="radarStars">
+            <span class="star lit">★</span>
+            <span class="star lit">★</span>
+            <span class="star lit">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+          </div>
+        </div>
+        <div class="status-cell">
+          <span class="cell-label">ESCAPE TELEMETRY</span>
+          <div class="telemetry-readout" id="radarScoreReadout">SCORE: 000,000</div>
+        </div>
+        <div class="status-cell">
+          <span class="cell-label">ESCAPE CHAIN</span>
+          <div class="telemetry-readout gold-glow" id="radarComboReadout">CHAIN: x1</div>
+        </div>
+        <div class="status-cell">
+          <span class="cell-label">COP CRASHES</span>
+          <div class="telemetry-readout red-glow" id="radarCrashesReadout">BLASTS: 0</div>
+        </div>
+        <div class="status-cell">
+          <span class="cell-label">CONTROL MODE</span>
+          <div class="telemetry-badge active" id="radarModeBadge">MANUAL PILOT</div>
+        </div>
+      </div>
+
+      <div class="radar-showcase-wrapper">
+        <div class="radar-display-frame">
+          <div class="radar-hud-header">
+            <span class="radar-gps-text" id="radarDistanceReadout">GPS ➔ EXTRACTION BEACON: 85m</span>
+            <span class="radar-status-badge" id="radarSignalBadge">LIVE SAT-LINK 60 FPS</span>
+          </div>
+
+          <div class="radar-canvas-container">
+            <canvas id="radarCanvas" width="380" height="380"></canvas>
+            <div class="radar-scan-overlay"></div>
+            <!-- Dynamic Floating Combat Alerts -->
+            <div class="radar-alert-banner" id="radarAlertBanner">DRIVE WITH W/A/S/D OR ARROWS</div>
+          </div>
+
+          <div class="radar-hud-footer">
+            <div class="mini-bar-group">
+              <span class="bar-label">VITALITY</span>
+              <div class="mini-bar health-bar"><div class="bar-fill" id="radarHealthFill" style="width: 100%;"></div></div>
+            </div>
+            <div class="mini-bar-group">
+              <span class="bar-label">SHIELD</span>
+              <div class="mini-bar armor-bar"><div class="bar-fill" id="radarShieldFill" style="width: 100%;"></div></div>
+            </div>
+            <div class="mini-bar-group">
+              <span class="bar-label">NITRO</span>
+              <div class="mini-bar nitro-bar"><div class="bar-fill" id="radarNitroFill" style="width: 100%;"></div></div>
+            </div>
+            <div class="radar-location-tag">METROPOLITAN DISTRICT // SECTOR 01</div>
+          </div>
+        </div>
+
+        <!-- Radar Interactive Flight Controls & Directives -->
+        <div class="radar-flight-deck">
+          <div class="deck-card">
+            <h4 class="deck-title">FLIGHT DECK TRANSMISSION</h4>
+            <p class="deck-subtext">Take command of the Apex Interceptor on the tactical radar using your keyboard or the on-screen keypad:</p>
+            
+            <!-- Key Controls Grid -->
+            <div class="radar-key-grid">
+              <div class="r-key-cell"><span class="r-key">W / ▲</span> <span>Accelerate</span></div>
+              <div class="r-key-cell"><span class="r-key">A / ◀</span> <span>Steer Left</span></div>
+              <div class="r-key-cell"><span class="r-key">S / ▼</span> <span>Brake / Reverse</span></div>
+              <div class="r-key-cell"><span class="r-key">D / ▶</span> <span>Steer Right</span></div>
+              <div class="r-key-cell"><span class="r-key">SPACE</span> <span>Drift Handbrake</span></div>
+              <div class="r-key-cell"><span class="r-key">SHIFT</span> <span>Nitro Injection</span></div>
+            </div>
+
+            <!-- Interactive Mode & Action Buttons -->
+            <div class="radar-action-bar">
+              <button class="radar-action-btn active" id="btnManualDrive">🕹 MANUAL PILOT</button>
+              <button class="radar-action-btn" id="btnAutopilot">🤖 AUTOPILOT</button>
+              <button class="radar-action-btn glow-gold" id="btnTriggerNitro">🚀 BURST NITRO</button>
+              <button class="radar-action-btn glow-red" id="btnTriggerBlastDemo">💥 BAIT CRASH</button>
+              <button class="radar-action-btn" id="btnResetArena">🔄 RESET SECTOR</button>
+            </div>
+
+            <!-- Virtual Touch / Mouse Directional D-Pad for Instant Click Play -->
+            <div class="touch-controls-panel">
+              <span class="touch-panel-label">ON-SCREEN ARCADE CONTROLS</span>
+              <div class="touch-dpad-layout">
+                <div class="dpad-row">
+                  <button class="dpad-btn" id="btnTouchUp" title="Accelerate">▲</button>
+                </div>
+                <div class="dpad-row">
+                  <button class="dpad-btn" id="btnTouchLeft" title="Turn Left">◀</button>
+                  <button class="dpad-btn dpad-handbrake" id="btnTouchDrift" title="Drift Handbrake">DRIFT</button>
+                  <button class="dpad-btn" id="btnTouchRight" title="Turn Right">▶</button>
+                </div>
+                <div class="dpad-row">
+                  <button class="dpad-btn" id="btnTouchDown" title="Brake">▼</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Live Telemetry Meters -->
+            <div class="live-telemetry-row">
+              <div class="telemetry-chip">
+                <span class="chip-k">VELOCITY</span>
+                <span class="chip-v" id="chipVelocity">0 KM/H</span>
+              </div>
+              <div class="telemetry-chip">
+                <span class="chip-k">SLIP ANGLE</span>
+                <span class="chip-v" id="chipSlip">0°</span>
+              </div>
+              <div class="telemetry-chip">
+                <span class="chip-k">WAYPOINT DIST</span>
+                <span class="chip-v" id="chipDist">85m</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Vehicle Garage & Neon Underglow Studio -->
+  <section class="section-padding" id="garage">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-tag">FLEET CUSTOMIZER</span>
+        <h3 class="section-title">THE ESCAPE VEHICLE & PURSUIT FLEET</h3>
+        <p class="section-desc">Select a vehicle to inspect engineering telemetry, tune neon underglow, and rev acoustic combustion engine models.</p>
+      </div>
+
+      <div class="garage-selector">
+        <button class="garage-tab active" data-vehicle="player">APEX INTERCEPTOR</button>
+        <button class="garage-tab" data-vehicle="chaser">CRUISER CHASER</button>
+        <button class="garage-tab" data-vehicle="interceptor">ROUTE INTERCEPTOR</button>
+        <button class="garage-tab" data-vehicle="blocker">HEAVY BLOCKER</button>
+      </div>
+
+      <!-- Underglow Palette & Acoustics Trigger -->
+      <div class="underglow-customizer">
+        <span class="underglow-title">CHASSIS NEON UNDERGLOW:</span>
+        <div class="underglow-palette" id="underglowPalette">
+          <button class="glow-chip active" data-glow="#00f0ff" style="--chip-color: #00f0ff;" title="Cyan Pulse">CYAN</button>
+          <button class="glow-chip" data-glow="#ffb700" style="--chip-color: #ffb700;" title="Solar Gold">GOLD</button>
+          <button class="glow-chip" data-glow="#ff1e46" style="--chip-color: #ff1e46;" title="Crimson Fury">CRIMSON</button>
+          <button class="glow-chip" data-glow="#00ff9d" style="--chip-color: #00ff9d;" title="Acid Green">ACID</button>
+          <button class="glow-chip" data-glow="#a855f7" style="--chip-color: #a855f7;" title="Neon Violet">VIOLET</button>
+          <button class="glow-chip" data-glow="#ffffff" style="--chip-color: #ffffff;" title="Stealth White">WHITE</button>
+        </div>
+        <button class="btn-rev-garage" id="btnGarageRev">🔊 REV SPEC ENGINE</button>
+      </div>
+
+      <div class="vehicle-detail-card" id="vehicleCard">
+        <div class="vehicle-visual" id="vehicleVisualStage">
+          <div class="vehicle-badge" id="vBadge">PLAYER CHASSIS</div>
+          <div class="vehicle-art-box" id="vArt">
+            <div class="vehicle-car-shape" id="vShape">
+              <div class="car-cabin"></div>
+              <div class="car-headlights"></div>
+              <div class="car-taillights"></div>
+            </div>
+            <!-- Dynamic Underglow Projection -->
+            <div class="neon-underglow-aura" id="vUnderglow"></div>
+          </div>
+        </div>
+        <div class="vehicle-specs">
+          <h4 class="vehicle-name" id="vName">APEX INTERCEPTOR</h4>
+          <p class="vehicle-description" id="vDesc">
+            High-torque lightweight escape vehicle equipped with dual-stage nitro injection, 
+            variable slip drift differential, and active kinetic shield integration.
+          </p>
+          <div class="spec-bars">
+            <div class="spec-row">
+              <span class="spec-name">TOP VELOCITY</span>
+              <div class="spec-progress"><div class="spec-fill" id="vSpeed" style="width: 90%;"></div></div>
+              <span class="spec-num" id="vSpeedVal">260 KM/H</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-name">ACCELERATION</span>
+              <div class="spec-progress"><div class="spec-fill" id="vAccel" style="width: 88%;"></div></div>
+              <span class="spec-num" id="vAccelVal">3.2s (0-100)</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-name">DRIFT STABILITY</span>
+              <div class="spec-progress"><div class="spec-fill" id="vHandling" style="width: 94%;"></div></div>
+              <span class="spec-num" id="vHandlingVal">94%</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-name">HULL INTEGRITY</span>
+              <div class="spec-progress"><div class="spec-fill" id="vArmor" style="width: 75%;"></div></div>
+              <span class="spec-num" id="vArmorVal">3 INTEGRITY</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Reality Audio Lab with Live Frequency Equalizer -->
+  <section class="section-padding dark-plate" id="audio">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-tag">ACOUSTIC LABORATORY</span>
+        <h3 class="section-title">STUDIO-GRADE 44.1kHz SOUND SYNTHESIS</h3>
+        <p class="section-desc">Experience real internal combustion exhaust rumble and authoritative cruiser horn sirens paired with a live frequency spectrum visualizer.</p>
+      </div>
+
+      <!-- Real-Time Frequency Spectrum Visualizer -->
+      <div class="visualizer-container">
+        <div class="visualizer-header">
+          <span class="vis-tag">REAL-TIME 44.1kHz HARMONIC SPECTRUM ANALYZER</span>
+          <span class="vis-status" id="visualizerStatus">STANDBY // READY</span>
+        </div>
+        <canvas id="audioVisualizerCanvas" width="960" height="130"></canvas>
+        <div class="visualizer-controls-row">
+          <div class="slider-control">
+            <label for="engineRpmSlider">THROTTLE RPM TUNER: <span id="sliderRpmValue">3,400 RPM (226 Hz)</span></label>
+            <input type="range" id="engineRpmSlider" min="800" max="8500" value="3400" step="50">
+          </div>
+          <div class="slider-control">
+            <label for="sirenRateSlider">SIREN CYCLE FREQUENCY: <span id="sliderSirenValue">2.4 Hz (RAPID SWEEP)</span></label>
+            <input type="range" id="sirenRateSlider" min="0.5" max="6.0" value="2.4" step="0.1">
+          </div>
+        </div>
+      </div>
+
+      <div class="audio-lab-grid">
+        <div class="sound-card">
+          <div class="sound-header">
+            <span class="sound-chip">V8 ENGINE</span>
+            <h4>Physical Combustion Engine</h4>
+          </div>
+          <p class="sound-desc">Synthesized cylinder firing pulses with crossplane manifold resonance and sub-bass exhaust chamber rumble.</p>
+          <div class="sound-controls">
+            <button class="sound-btn btn-engine" id="btnEngine">▶ HEAR ENGINE REV</button>
+            <span class="sound-status" id="engineStatus">Ready</span>
+          </div>
+        </div>
+
+        <div class="sound-card">
+          <div class="sound-header">
+            <span class="sound-chip">FEDERAL SIGNAL</span>
+            <h4>Pursuit Siren (Wail Mode)</h4>
+          </div>
+          <p class="sound-desc">Authentic emergency speaker horn acoustics featuring saturated odd harmonics and 1.8-second pursuit sweep.</p>
+          <div class="sound-controls">
+            <button class="sound-btn btn-siren" id="btnSirenWail">▶ PURSUIT WAIL</button>
+            <span class="sound-status" id="wailStatus">Ready</span>
+          </div>
+        </div>
+
+        <div class="sound-card">
+          <div class="sound-header">
+            <span class="sound-chip">URGENT HORN</span>
+            <h4>Close-Range Siren (Yelp Mode)</h4>
+          </div>
+          <p class="sound-desc">Rapid 4Hz urgent sweep for close-proximity takedown maneuvers with metallic horn compression.</p>
+          <div class="sound-controls">
+            <button class="sound-btn btn-siren" id="btnSirenYelp">▶ URGENT YELP</button>
+            <span class="sound-status" id="yelpStatus">Ready</span>
+          </div>
+        </div>
+
+        <div class="sound-card">
+          <div class="sound-header">
+            <span class="sound-chip">COLLISION</span>
+            <h4>Tactical Blast & Shockwave</h4>
+          </div>
+          <p class="sound-desc">Deep sub-bass pitch drop (140Hz to 28Hz) delivering chest-thumping impact and long reverb tail.</p>
+          <div class="sound-controls">
+            <button class="sound-btn btn-explosion" id="btnExplosion">▶ TRIGGER BLAST</button>
+            <span class="sound-status" id="blastStatus">Ready</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission Operations & Briefing -->
+  <section class="section-padding" id="controls">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-tag">OPERATIONAL BRIEFING</span>
+        <h3 class="section-title">CONTROL DIRECTIVES & SURVIVAL PROTOCOL</h3>
+        <p class="section-desc">Study the controls and tactical guidelines before deploying into the pursuit zone.</p>
+      </div>
+
+      <div class="briefing-columns">
+        <div class="briefing-box">
+          <h4 class="box-title">PRIMARY OPERATOR CONTROLS</h4>
+          <div class="key-binding-list">
+            <div class="key-row">
+              <span class="key-chip">W / UP ARROW</span>
+              <span class="key-desc">Throttle Acceleration</span>
+            </div>
+            <div class="key-row">
+              <span class="key-chip">S / DOWN ARROW</span>
+              <span class="key-desc">Brake & High-Torque Reverse</span>
+            </div>
+            <div class="key-row">
+              <span class="key-chip">A / D or LEFT / RIGHT</span>
+              <span class="key-desc">Precision Steering & Evasion</span>
+            </div>
+            <div class="key-row">
+              <span class="key-chip">SPACEBAR</span>
+              <span class="key-desc">Drift Handbrake / Counter-Slip</span>
+            </div>
+            <div class="key-row">
+              <span class="key-chip">SHIFT KEY</span>
+              <span class="key-desc">Nitro Boost Injection</span>
+            </div>
+            <div class="key-row">
+              <span class="key-chip">M KEY / CLICK RADAR</span>
+              <span class="key-desc">Toggle Maximized Tactical Radar</span>
+            </div>
+            <div class="key-row">
+              <span class="key-chip">ESC / P KEY</span>
+              <span class="key-desc">Tactical Link Pause</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="briefing-box">
+          <h4 class="box-title">TACTICAL SURVIVAL RULES</h4>
+          <ul class="tactical-rules-list">
+            <li>
+              <strong>Lethal Impact Caution:</strong> 
+              Pursuit cruisers catching an unshielded vehicle or high-speed crashes into perimeter barriers cause immediate vehicle destruction. Maintain distance!
+            </li>
+            <li>
+              <strong>Baiting Friendly Fire:</strong> 
+              Cruisers cannot brake in time when trailing behind you. Perform sharp 90-degree drift turns at avenue intersections to force pursuing cruisers to crash into each other!
+            </li>
+            <li>
+              <strong>Close Call Mastery:</strong> 
+              Passing within centimeters of pursuit cruisers activates Time Dilation and increases your score multiplier up to x10.
+            </li>
+            <li>
+              <strong>Sky Laser Extraction:</strong> 
+              The extraction beacon is visible from across the entire sector. Drive directly onto the illuminated landing pad to secure 3-star victory!
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <h5 class="footer-brand">CHASELINE<span> // LAST EXIT</span></h5>
+        <p class="footer-tagline">Arcade Pursuit Survival Game. All rights reserved.</p>
+      </div>
+      <div class="footer-right">
+        <span class="status-indicator online"></span>
+        <span class="footer-status-text">MISSION NETWORK OPERATIONAL</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

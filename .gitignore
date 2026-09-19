@@ -1,0 +1,17 @@
+# Godot 4 editor cache and imported assets
+.godot/
+
+# Executables and builds
+*.exe
+*.dll
+*.so
+*.dylib
+exports/
+builds/
+
+# System and editor files
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.tmp
+*.log

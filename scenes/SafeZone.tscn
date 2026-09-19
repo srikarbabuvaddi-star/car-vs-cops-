@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/safe_zone.gd" id="1_safe_zone"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_Safe"]
+height = 6.0
+radius = 8.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_Ring"]
+top_radius = 8.0
+bottom_radius = 8.0
+height = 0.15
+radial_segments = 36
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_Beacon"]
+top_radius = 0.4
+bottom_radius = 3.5
+height = 80.0
+radial_segments = 20
+
+[sub_resource type="TorusMesh" id="TorusMesh_Pad"]
+inner_radius = 6.5
+outer_radius = 8.0
+
+[node name="SafeZone" type="Area3D" groups=["safe_zone"]]
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1_safe_zone")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.0, 0)
+shape = SubResource("CylinderShape3D_Safe")
+
+[node name="RingMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
+mesh = SubResource("CylinderMesh_Ring")
+
+[node name="TorusMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12, 0)
+mesh = SubResource("TorusMesh_Pad")
+
+[node name="BeaconMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 40.0, 0)
+mesh = SubResource("CylinderMesh_Beacon")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.0, 0)
+light_color = Color(0.15, 1, 0.55, 1)
+light_energy = 8.0
+omni_range = 35.0

@@ -1,0 +1,116 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/minimap.gd" id="1_minimap"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_GTARadar"]
+bg_color = Color(0.04, 0.06, 0.09, 0.90)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.28, 0.35, 0.45, 0.85)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_BarHealth"]
+bg_color = Color(0.12, 0.80, 0.35, 1.0)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_BarArmor"]
+bg_color = Color(0.15, 0.65, 1.0, 1.0)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="Minimap" type="Control"]
+custom_minimum_size = Vector2(184, 184)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 184.0
+offset_bottom = 184.0
+script = ExtResource("1_minimap")
+
+[node name="BGPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_GTARadar")
+
+[node name="HeaderBox" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 8.0
+offset_top = 4.0
+offset_right = -8.0
+offset_bottom = 20.0
+grow_horizontal = 2
+
+[node name="TitleLabel" type="Label" parent="HeaderBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1.0, 0.85, 0.1, 1.0)
+theme_override_font_sizes/font_size = 11
+text = "GPS ➔ 85m"
+vertical_alignment = 1
+
+[node name="HintLabel" type="Label" parent="HeaderBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.75, 0.85, 0.8)
+theme_override_font_sizes/font_size = 9
+text = "[M] ⛶"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="BottomBars" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -24.0
+offset_right = -8.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 2
+
+[node name="MeterHBox" type="HBoxContainer" parent="BottomBars"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="HealthBar" type="ProgressBar" parent="BottomBars/MeterHBox"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/fill = SubResource("StyleBoxFlat_BarHealth")
+value = 100.0
+show_percentage = false
+
+[node name="ArmorBar" type="ProgressBar" parent="BottomBars/MeterHBox"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/fill = SubResource("StyleBoxFlat_BarArmor")
+value = 100.0
+show_percentage = false
+
+[node name="LocationLabel" type="Label" parent="BottomBars"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 0.75)
+theme_override_font_sizes/font_size = 9
+text = "LOS SANTOS // DISTRICT 1"
+horizontal_alignment = 1

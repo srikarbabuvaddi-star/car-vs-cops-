@@ -1,0 +1,646 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_hud"]
+[ext_resource type="PackedScene" path="res://scenes/Minimap.tscn" id="2_minimap"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_GlassPanel"]
+content_margin_left = 14.0
+content_margin_top = 10.0
+content_margin_right = 14.0
+content_margin_bottom = 10.0
+bg_color = Color(0.04, 0.07, 0.13, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.0, 0.85, 1.0, 0.5)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0.7, 1, 0.15)
+shadow_size = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_WinModal"]
+content_margin_left = 24.0
+content_margin_top = 20.0
+content_margin_right = 24.0
+content_margin_bottom = 20.0
+bg_color = Color(0.04, 0.08, 0.14, 0.95)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.0, 1.0, 0.6, 0.9)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 1, 0.5, 0.25)
+shadow_size = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_FailModal"]
+content_margin_left = 24.0
+content_margin_top = 20.0
+content_margin_right = 24.0
+content_margin_bottom = 20.0
+bg_color = Color(0.08, 0.04, 0.06, 0.95)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1.0, 0.1, 0.25, 0.9)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(1, 0.1, 0.25, 0.3)
+shadow_size = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_PauseModal"]
+content_margin_left = 24.0
+content_margin_top = 20.0
+content_margin_right = 24.0
+content_margin_bottom = 20.0
+bg_color = Color(0.04, 0.06, 0.12, 0.95)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.0, 0.85, 1.0, 0.9)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0.85, 1, 0.25)
+shadow_size = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_BtnNormal"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+bg_color = Color(0.08, 0.12, 0.22, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.15, 0.75, 1.0, 0.75)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_BtnHover"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+bg_color = Color(0.14, 0.24, 0.42, 1.0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 0.95, 1.0, 1.0)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0, 0.9, 1, 0.4)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_BtnPressed"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+bg_color = Color(0.05, 0.08, 0.15, 1.0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1.0, 0.8, 0.1, 1.0)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="Theme" id="Theme_CyberHUD"]
+Button/styles/disabled = SubResource("StyleBoxFlat_BtnNormal")
+Button/styles/focus = SubResource("StyleBoxFlat_BtnHover")
+Button/styles/hover = SubResource("StyleBoxFlat_BtnHover")
+Button/styles/normal = SubResource("StyleBoxFlat_BtnNormal")
+Button/styles/pressed = SubResource("StyleBoxFlat_BtnPressed")
+
+[node name="HUD" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_hud")
+
+[node name="HeatWarningFlash" type="ColorRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0, 0, 0.25)
+
+[node name="TopLeft" type="MarginContainer" parent="."]
+offset_left = 24.0
+offset_top = 18.0
+offset_right = 380.0
+offset_bottom = 150.0
+
+[node name="Panel" type="PanelContainer" parent="TopLeft"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_GlassPanel")
+
+[node name="VBox" type="VBoxContainer" parent="TopLeft/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="HeaderHBox" type="HBoxContainer" parent="TopLeft/Panel/VBox"]
+layout_mode = 2
+
+[node name="ScoreTitle" type="Label" parent="TopLeft/Panel/VBox/HeaderHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.75, 0.9, 1)
+theme_override_font_sizes/font_size = 11
+text = "SCORE // PROTOCOL"
+
+[node name="Spacer" type="Control" parent="TopLeft/Panel/VBox/HeaderHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScoreLabel" type="Label" parent="TopLeft/Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 32
+text = "0"
+
+[node name="WorldLabel" type="Label" parent="TopLeft/Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "WORLD 01 // LEVEL 01"
+
+[node name="ObjectiveLabel" type="Label" parent="TopLeft/Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 1)
+theme_override_font_sizes/font_size = 13
+text = "SURVIVE: 00:00 / 00:30"
+
+[node name="ObjectiveBar" type="ProgressBar" parent="TopLeft/Panel/VBox"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+show_percentage = false
+
+[node name="TopCenter" type="MarginContainer" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -140.0
+offset_top = 18.0
+offset_right = 140.0
+offset_bottom = 80.0
+grow_horizontal = 2
+
+[node name="VBox" type="VBoxContainer" parent="TopCenter"]
+layout_mode = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="LivesContainer" type="HBoxContainer" parent="TopCenter/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Heart1" type="Label" parent="TopCenter/VBox/LivesContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.2, 0.35, 1)
+theme_override_font_sizes/font_size = 30
+text = "♥"
+
+[node name="Heart2" type="Label" parent="TopCenter/VBox/LivesContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.2, 0.35, 1)
+theme_override_font_sizes/font_size = 30
+text = "♥"
+
+[node name="Heart3" type="Label" parent="TopCenter/VBox/LivesContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.2, 0.35, 1)
+theme_override_font_sizes/font_size = 30
+text = "♥"
+
+[node name="ShieldBadge" type="PanelContainer" parent="TopCenter/VBox"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="ShieldLabel" type="Label" parent="TopCenter/VBox/ShieldBadge"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0, 1, 0.65, 1)
+theme_override_font_sizes/font_size = 12
+text = "🛡 SHIELD ACTIVE"
+
+[node name="TopRight" type="MarginContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -280.0
+offset_top = 18.0
+offset_right = -24.0
+offset_bottom = 340.0
+grow_horizontal = 0
+
+[node name="VBox" type="VBoxContainer" parent="TopRight"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Minimap" parent="TopRight/VBox" instance=ExtResource("2_minimap")]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="DestinationLabel" type="Label" parent="TopRight/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0, 1, 0.6, 1)
+theme_override_font_sizes/font_size = 13
+text = "DESTINATION: --"
+horizontal_alignment = 2
+
+[node name="HeatHBox" type="HBoxContainer" parent="TopRight/VBox"]
+layout_mode = 2
+alignment = 2
+
+[node name="HeatLabel" type="Label" parent="TopRight/VBox/HeatHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.3, 0.3, 1)
+theme_override_font_sizes/font_size = 18
+text = "HEAT 01"
+
+[node name="EnergySpacer" type="Control" parent="TopRight/VBox/HeatHBox"]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+
+[node name="EnergyLabel" type="Label" parent="TopRight/VBox/HeatHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.4, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "● 00"
+
+[node name="HeatBar" type="ProgressBar" parent="TopRight/VBox"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+show_percentage = false
+
+[node name="ComboBadge" type="PanelContainer" parent="TopRight/VBox"]
+visible = false
+layout_mode = 2
+
+[node name="ComboLabel" type="Label" parent="TopRight/VBox/ComboBadge"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.75, 0.1, 1)
+theme_override_font_sizes/font_size = 14
+text = "ESCAPE x2"
+horizontal_alignment = 2
+
+[node name="BottomLeft" type="MarginContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -80.0
+offset_right = 280.0
+offset_bottom = -20.0
+grow_vertical = 0
+
+[node name="VBox" type="VBoxContainer" parent="BottomLeft"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="NitroLabel" type="Label" parent="BottomLeft/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 13
+text = "NITRO BOOST [SHIFT / SPACE]"
+
+[node name="NitroBar" type="ProgressBar" parent="BottomLeft/VBox"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+value = 100.0
+show_percentage = false
+
+[node name="BottomCenter" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -120.0
+offset_right = 250.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="CenterAlert" type="Control" parent="BottomCenter"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(250, 45)
+
+[node name="ToastLabel" type="Label" parent="BottomCenter/CenterAlert"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 26
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BottomRight" type="MarginContainer" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -240.0
+offset_top = -90.0
+offset_right = -24.0
+offset_bottom = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Panel" type="PanelContainer" parent="BottomRight"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_GlassPanel")
+
+[node name="VBox" type="VBoxContainer" parent="BottomRight/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="SpeedLabel" type="Label" parent="BottomRight/Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.98, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "0 KM/H"
+horizontal_alignment = 2
+
+[node name="TimeLabel" type="Label" parent="BottomRight/Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "00:00"
+horizontal_alignment = 2
+
+[node name="Modals" type="Control" parent="."]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BackdropTint" type="ColorRect" parent="Modals"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.04, 0.08, 0.88)
+
+[node name="WinModal" type="PanelContainer" parent="Modals"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -240.0
+offset_top = -220.0
+offset_right = 240.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_CyberHUD")
+theme_override_styles/panel = SubResource("StyleBoxFlat_WinModal")
+
+[node name="VBox" type="VBoxContainer" parent="Modals/WinModal"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Modals/WinModal/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0, 1.0, 0.6, 1)
+theme_override_font_sizes/font_size = 24
+text = "// MISSION COMPLETE //"
+horizontal_alignment = 1
+
+[node name="StarsLabel" type="Label" parent="Modals/WinModal/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 32
+text = "★ ★ ★"
+horizontal_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="Modals/WinModal/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "SCORE: 0"
+horizontal_alignment = 1
+
+[node name="TimeLabel" type="Label" parent="Modals/WinModal/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 14
+text = "TIME: 00:00"
+horizontal_alignment = 1
+
+[node name="CloseCallsLabel" type="Label" parent="Modals/WinModal/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 14
+text = "CLOSE CALLS: 0"
+horizontal_alignment = 1
+
+[node name="BestScoreLabel" type="Label" parent="Modals/WinModal/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "BEST SCORE: 0"
+horizontal_alignment = 1
+
+[node name="ButtonContainer" type="VBoxContainer" parent="Modals/WinModal/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="NextLevelButton" type="Button" parent="Modals/WinModal/VBox/ButtonContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+text = "NEXT SECTOR ▶"
+
+[node name="WinRetryButton" type="Button" parent="Modals/WinModal/VBox/ButtonContainer"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+text = "REPLAY MISSION ↺"
+
+[node name="WinSelectButton" type="Button" parent="Modals/WinModal/VBox/ButtonContainer"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+text = "LEVEL SELECT ☰"
+
+[node name="FailModal" type="PanelContainer" parent="Modals"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -240.0
+offset_top = -220.0
+offset_right = 240.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_CyberHUD")
+theme_override_styles/panel = SubResource("StyleBoxFlat_FailModal")
+
+[node name="VBox" type="VBoxContainer" parent="Modals/FailModal"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Modals/FailModal/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.15, 0.25, 1)
+theme_override_font_sizes/font_size = 24
+text = "// SYSTEM CRITICAL // VEHICLE DESTROYED"
+horizontal_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="Modals/FailModal/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "FINAL SCORE: 0"
+horizontal_alignment = 1
+
+[node name="TimeLabel" type="Label" parent="Modals/FailModal/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 14
+text = "SURVIVAL TIME: 00:00"
+horizontal_alignment = 1
+
+[node name="MaxHeatLabel" type="Label" parent="Modals/FailModal/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.35, 0.35, 1)
+theme_override_font_sizes/font_size = 14
+text = "MAX HEAT: 01"
+horizontal_alignment = 1
+
+[node name="CloseCallsLabel" type="Label" parent="Modals/FailModal/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 14
+text = "CLOSE CALLS: 0"
+horizontal_alignment = 1
+
+[node name="BestScoreLabel" type="Label" parent="Modals/FailModal/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "BEST SCORE: 0"
+horizontal_alignment = 1
+
+[node name="ButtonContainer" type="VBoxContainer" parent="Modals/FailModal/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="FailRetryButton" type="Button" parent="Modals/FailModal/VBox/ButtonContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+text = "RESTART MISSION ↺"
+
+[node name="FailSelectButton" type="Button" parent="Modals/FailModal/VBox/ButtonContainer"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+text = "LEVEL SELECT ☰"
+
+[node name="FailMenuButton" type="Button" parent="Modals/FailModal/VBox/ButtonContainer"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+text = "MAIN MENU ⏏"
+
+[node name="PauseModal" type="PanelContainer" parent="Modals"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -190.0
+offset_right = 220.0
+offset_bottom = 190.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_CyberHUD")
+theme_override_styles/panel = SubResource("StyleBoxFlat_PauseModal")
+
+[node name="VBox" type="VBoxContainer" parent="Modals/PauseModal"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Modals/PauseModal/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "// TACTICAL PAUSE //"
+horizontal_alignment = 1
+
+[node name="SettingsContainer" type="VBoxContainer" parent="Modals/PauseModal/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="ShakeCheck" type="CheckBox" parent="Modals/PauseModal/VBox/SettingsContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Screen Shake"
+
+[node name="ButtonContainer" type="VBoxContainer" parent="Modals/PauseModal/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ResumeButton" type="Button" parent="Modals/PauseModal/VBox/ButtonContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+text = "RESUME LINK ▶"
+
+[node name="RestartButton" type="Button" parent="Modals/PauseModal/VBox/ButtonContainer"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+text = "RESTART LEVEL ↺"
+
+[node name="PauseSelectButton" type="Button" parent="Modals/PauseModal/VBox/ButtonContainer"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+text = "LEVEL SELECT ☰"
+
+[node name="PauseMenuButton" type="Button" parent="Modals/PauseModal/VBox/ButtonContainer"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+text = "MAIN MENU ⏏"

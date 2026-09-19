@@ -1,0 +1,94 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://scripts/explosion.gd" id="1_explosion"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_Fire"]
+transparency = 1
+albedo_color = Color(1, 0.45, 0.1, 0.9)
+emission_enabled = true
+emission = Color(1, 0.35, 0.05, 1)
+emission_energy_multiplier = 5.0
+shading_mode = 0
+
+[sub_resource type="StandardMaterial3D" id="Mat_Spark"]
+transparency = 1
+albedo_color = Color(1, 0.9, 0.3, 1)
+emission_enabled = true
+emission = Color(1, 0.85, 0.2, 1)
+emission_energy_multiplier = 6.0
+shading_mode = 0
+
+[sub_resource type="StandardMaterial3D" id="Mat_Smoke"]
+transparency = 1
+albedo_color = Color(0.2, 0.22, 0.25, 0.5)
+shading_mode = 0
+
+[sub_resource type="StandardMaterial3D" id="Mat_Shockwave"]
+transparency = 1
+albedo_color = Color(1, 0.6, 0.2, 0.4)
+emission_enabled = true
+emission = Color(1, 0.5, 0.1, 1)
+emission_energy_multiplier = 3.0
+
+[sub_resource type="TorusMesh" id="TorusMesh_Shock"]
+material = SubResource("Mat_Shockwave")
+inner_radius = 0.85
+outer_radius = 1.0
+
+[node name="Explosion" type="Node3D"]
+script = ExtResource("1_explosion")
+
+[node name="FireParticles" type="CPUParticles3D" parent="."]
+emitting = false
+amount = 40
+lifetime = 0.6
+one_shot = true
+explosiveness = 0.9
+material_override = SubResource("Mat_Fire")
+direction = Vector3(0, 1, 0)
+spread = 180.0
+gravity = Vector3(0, 2, 0)
+initial_velocity_min = 8.0
+initial_velocity_max = 16.0
+scale_amount_min = 0.5
+scale_amount_max = 1.6
+
+[node name="SparkParticles" type="CPUParticles3D" parent="."]
+emitting = false
+amount = 50
+lifetime = 0.7
+one_shot = true
+explosiveness = 0.95
+material_override = SubResource("Mat_Spark")
+direction = Vector3(0, 1, 0)
+spread = 180.0
+gravity = Vector3(0, -9.8, 0)
+initial_velocity_min = 12.0
+initial_velocity_max = 24.0
+scale_amount_min = 0.1
+scale_amount_max = 0.3
+
+[node name="SmokeParticles" type="CPUParticles3D" parent="."]
+emitting = false
+amount = 30
+lifetime = 1.0
+one_shot = true
+explosiveness = 0.8
+material_override = SubResource("Mat_Smoke")
+direction = Vector3(0, 1, 0)
+spread = 80.0
+gravity = Vector3(0, 4, 0)
+initial_velocity_min = 3.0
+initial_velocity_max = 8.0
+scale_amount_min = 0.8
+scale_amount_max = 2.4
+
+[node name="Shockwave" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+mesh = SubResource("TorusMesh_Shock")
+
+[node name="BlastLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+light_color = Color(1, 0.6, 0.15, 1)
+light_energy = 8.0
+omni_range = 25.0

@@ -1,0 +1,159 @@
+[gd_scene load_steps=21 format=3]
+
+[ext_resource type="Script" path="res://scripts/police_ai.gd" id="1_police_script"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cop"]
+size = Vector3(1.7, 0.95, 3.5)
+
+[sub_resource type="StandardMaterial3D" id="Mat_PoliceWhite"]
+albedo_color = Color(0.92, 0.95, 0.98, 1)
+metallic = 0.2
+roughness = 0.3
+
+[sub_resource type="BoxMesh" id="BoxMesh_CopBody"]
+material = SubResource("Mat_PoliceWhite")
+size = Vector3(1.55, 0.48, 3.4)
+
+[sub_resource type="StandardMaterial3D" id="Mat_PoliceBlueStripe"]
+albedo_color = Color(0.08, 0.16, 0.3, 1)
+roughness = 0.4
+
+[sub_resource type="BoxMesh" id="BoxMesh_Stripe"]
+material = SubResource("Mat_PoliceBlueStripe")
+size = Vector3(1.57, 0.16, 3.42)
+
+[sub_resource type="StandardMaterial3D" id="Mat_CopGlass"]
+albedo_color = Color(0.05, 0.07, 0.1, 1)
+metallic = 0.6
+roughness = 0.15
+
+[sub_resource type="BoxMesh" id="BoxMesh_CopCabin"]
+material = SubResource("Mat_CopGlass")
+size = Vector3(1.2, 0.42, 1.7)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Bumper"]
+albedo_color = Color(0.1, 0.1, 0.12, 1)
+roughness = 0.7
+
+[sub_resource type="BoxMesh" id="BoxMesh_Bullbar"]
+material = SubResource("Mat_Bumper")
+size = Vector3(1.4, 0.3, 0.15)
+
+[sub_resource type="BoxMesh" id="BoxMesh_LightbarBase"]
+material = SubResource("Mat_Bumper")
+size = Vector3(0.9, 0.06, 0.22)
+
+[sub_resource type="StandardMaterial3D" id="Mat_RedSiren"]
+albedo_color = Color(1, 0.05, 0.2, 1)
+emission_enabled = true
+emission = Color(1, 0, 0.15, 1)
+emission_energy_multiplier = 4.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_RedLight"]
+material = SubResource("Mat_RedSiren")
+size = Vector3(0.38, 0.12, 0.18)
+
+[sub_resource type="StandardMaterial3D" id="Mat_BlueSiren"]
+albedo_color = Color(0, 0.4, 1, 1)
+emission_enabled = true
+emission = Color(0, 0.4, 1, 1)
+emission_energy_multiplier = 4.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_BlueLight"]
+material = SubResource("Mat_BlueSiren")
+size = Vector3(0.38, 0.12, 0.18)
+
+[sub_resource type="StandardMaterial3D" id="Mat_CopWheel"]
+albedo_color = Color(0.08, 0.09, 0.11, 1)
+roughness = 0.85
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_CopWheel"]
+material = SubResource("Mat_CopWheel")
+top_radius = 0.34
+bottom_radius = 0.34
+height = 0.24
+radial_segments = 12
+
+[sub_resource type="StandardMaterial3D" id="Mat_CopShadow"]
+transparency = 1
+albedo_color = Color(0.02, 0.03, 0.05, 0.45)
+shading_mode = 0
+
+[sub_resource type="QuadMesh" id="QuadMesh_CopShadow"]
+material = SubResource("Mat_CopShadow")
+size = Vector2(1.9, 3.8)
+orientation = 1
+
+[node name="PoliceCar" type="CharacterBody3D" groups=["police"]]
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("1_police_script")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_cop")
+
+[node name="ModelRoot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+
+[node name="Shadow" type="MeshInstance3D" parent="ModelRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.33, 0)
+mesh = SubResource("QuadMesh_CopShadow")
+
+[node name="Body" type="MeshInstance3D" parent="ModelRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.16, 0)
+mesh = SubResource("BoxMesh_CopBody")
+
+[node name="Stripe" type="MeshInstance3D" parent="ModelRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.16, 0)
+mesh = SubResource("BoxMesh_Stripe")
+
+[node name="Cockpit" type="MeshInstance3D" parent="ModelRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.48, -0.15)
+mesh = SubResource("BoxMesh_CopCabin")
+
+[node name="Bullbar" type="MeshInstance3D" parent="ModelRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18, -1.75)
+mesh = SubResource("BoxMesh_Bullbar")
+
+[node name="Lightbar" type="Node3D" parent="ModelRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.72, -0.15)
+
+[node name="Base" type="MeshInstance3D" parent="ModelRoot/Lightbar"]
+mesh = SubResource("BoxMesh_LightbarBase")
+
+[node name="RedLight" type="MeshInstance3D" parent="ModelRoot/Lightbar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.24, 0.08, 0)
+mesh = SubResource("BoxMesh_RedLight")
+
+[node name="BlueLight" type="MeshInstance3D" parent="ModelRoot/Lightbar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.24, 0.08, 0)
+mesh = SubResource("BoxMesh_BlueLight")
+
+[node name="OmniRed" type="OmniLight3D" parent="ModelRoot/Lightbar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.4, 0)
+light_color = Color(1, 0.05, 0.2, 1)
+light_energy = 3.0
+omni_range = 8.0
+
+[node name="OmniBlue" type="OmniLight3D" parent="ModelRoot/Lightbar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.4, 0)
+light_color = Color(0.1, 0.45, 1, 1)
+light_energy = 3.0
+omni_range = 8.0
+
+[node name="WheelFL" type="MeshInstance3D" parent="ModelRoot"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.8, 0, -1.1)
+mesh = SubResource("CylinderMesh_CopWheel")
+
+[node name="WheelFR" type="MeshInstance3D" parent="ModelRoot"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.8, 0, -1.1)
+mesh = SubResource("CylinderMesh_CopWheel")
+
+[node name="WheelRL" type="MeshInstance3D" parent="ModelRoot"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.8, 0, 1.1)
+mesh = SubResource("CylinderMesh_CopWheel")
+
+[node name="WheelRR" type="MeshInstance3D" parent="ModelRoot"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.8, 0, 1.1)
+mesh = SubResource("CylinderMesh_CopWheel")

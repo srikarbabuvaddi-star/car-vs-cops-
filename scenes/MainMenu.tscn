@@ -1,0 +1,380 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_main_menu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_MenuBtnNormal"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(0.06, 0.1, 0.18, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.0, 0.85, 1, 0.75)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_MenuBtnHover"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(0.14, 0.22, 0.38, 1.0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.5, 0.95, 1, 1.0)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0.85, 1, 0.45)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_MenuBtnPressed"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(0.04, 0.07, 0.12, 1.0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1.0, 0.8, 0.1, 1.0)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_MenuModal"]
+content_margin_left = 24.0
+content_margin_top = 20.0
+content_margin_right = 24.0
+content_margin_bottom = 20.0
+bg_color = Color(0.04, 0.07, 0.13, 0.96)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.0, 0.85, 1, 0.85)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0.8, 1, 0.25)
+shadow_size = 18
+
+[sub_resource type="Theme" id="Theme_CyberMenu"]
+Button/styles/disabled = SubResource("StyleBoxFlat_MenuBtnNormal")
+Button/styles/focus = SubResource("StyleBoxFlat_MenuBtnHover")
+Button/styles/hover = SubResource("StyleBoxFlat_MenuBtnHover")
+Button/styles/normal = SubResource("StyleBoxFlat_MenuBtnNormal")
+Button/styles/pressed = SubResource("StyleBoxFlat_MenuBtnPressed")
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_CyberMenu")
+script = ExtResource("1_main_menu")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.03, 0.06, 1)
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 40
+
+[node name="VBox" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 22
+alignment = 1
+
+[node name="HeaderBox" type="VBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="Margin/VBox/HeaderBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.15, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 46
+text = "CHASELINE"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Margin/VBox/HeaderBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.4, 0.2, 1)
+theme_override_font_sizes/font_size = 18
+text = "LAST EXIT // 100 LEVEL ESCAPE PROTOCOL"
+horizontal_alignment = 1
+
+[node name="StatsLabel" type="Label" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.85, 0.95, 1)
+theme_override_font_sizes/font_size = 14
+text = "MISSION PROGRESS: LEVEL 01 / 100  |  TOTAL STARS: ★ 0 / 300"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Margin/VBox"]
+layout_mode = 2
+
+[node name="MenuButtons" type="VBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 12
+
+[node name="PlayButton" type="Button" parent="Margin/VBox/MenuButtons"]
+custom_minimum_size = Vector2(340, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 20
+text = "▶ START CHASE"
+
+[node name="LevelsButton" type="Button" parent="Margin/VBox/MenuButtons"]
+custom_minimum_size = Vector2(340, 44)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "☰ LEVEL SELECT (100)"
+
+[node name="GarageButton" type="Button" parent="Margin/VBox/MenuButtons"]
+custom_minimum_size = Vector2(340, 42)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "⚙ GARAGE & VEHICLE STATS"
+
+[node name="SettingsButton" type="Button" parent="Margin/VBox/MenuButtons"]
+custom_minimum_size = Vector2(340, 42)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "🛠 SETTINGS"
+
+[node name="HelpButton" type="Button" parent="Margin/VBox/MenuButtons"]
+custom_minimum_size = Vector2(340, 42)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "ⓘ HOW TO PLAY"
+
+[node name="QuitButton" type="Button" parent="Margin/VBox/MenuButtons"]
+custom_minimum_size = Vector2(340, 38)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.7, 0.8, 1)
+theme_override_font_sizes/font_size = 14
+text = "✕ EXIT GAME"
+
+[node name="HelpModal" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -210.0
+offset_right = 280.0
+offset_bottom = 210.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_MenuModal")
+
+[node name="VBox" type="VBoxContainer" parent="HelpModal"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="HelpTitle" type="Label" parent="HelpModal/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "HOW TO PLAY"
+horizontal_alignment = 1
+
+[node name="HelpContent" type="RichTextLabel" parent="HelpModal/VBox"]
+custom_minimum_size = Vector2(0, 260)
+layout_mode = 2
+bbcode_enabled = true
+text = "[b]CONTROLS:[/b]
+• [color=#5eead4]W / UP ARROW[/color] : Accelerate
+• [color=#5eead4]S / DOWN ARROW[/color] : Brake & Reverse
+• [color=#5eead4]A / D or LEFT / RIGHT[/color] : Steer & Drift
+• [color=#38bdf8]SHIFT / SPACEBAR[/color] : Nitro Boost (Regenerates over time)
+• [color=#38bdf8]M KEY / CLICK RADAR[/color] : Expand / Minimize Tactical Radar
+• [color=#fbbf24]ESC[/color] : Pause
+
+[b]SURVIVAL MECHANICS:[/b]
+• [color=#f59e0b]CLOSE CALLS[/color]: Steer narrowly past pursuit vehicles to initiate Time Dilation and build your Escape Chain multiplier up to x10!
+• [color=#a855f7]COP BLASTS[/color]: Bait police into colliding with each other to trigger massive explosions (+500 pts)!
+• [color=#34d399]EXTRACTION[/color]: Drive to the illuminated Sky Laser Beacon to clear the sector!"
+
+[node name="CloseHelpButton" type="Button" parent="HelpModal/VBox"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "CLOSE"
+
+[node name="GarageModal" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -200.0
+offset_right = 260.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_MenuModal")
+
+[node name="VBox" type="VBoxContainer" parent="GarageModal"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="GarageTitle" type="Label" parent="GarageModal/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.75, 0.2, 1)
+theme_override_font_sizes/font_size = 22
+text = "GARAGE // APEX INTERCEPTOR"
+horizontal_alignment = 1
+
+[node name="VehicleDesc" type="Label" parent="GarageModal/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 13
+text = "Spec: Lightweight High-Torque Rear-Wheel Escape Chassis"
+horizontal_alignment = 1
+
+[node name="StatsBox" type="VBoxContainer" parent="GarageModal/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Stat1" type="HBoxContainer" parent="GarageModal/VBox/StatsBox"]
+layout_mode = 2
+
+[node name="Lbl" type="Label" parent="GarageModal/VBox/StatsBox/Stat1"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "TOP SPEED"
+
+[node name="Bar" type="ProgressBar" parent="GarageModal/VBox/StatsBox/Stat1"]
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+size_flags_horizontal = 3
+value = 85.0
+show_percentage = false
+
+[node name="Stat2" type="HBoxContainer" parent="GarageModal/VBox/StatsBox"]
+layout_mode = 2
+
+[node name="Lbl" type="Label" parent="GarageModal/VBox/StatsBox/Stat2"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "HANDLING"
+
+[node name="Bar" type="ProgressBar" parent="GarageModal/VBox/StatsBox/Stat2"]
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+size_flags_horizontal = 3
+value = 92.0
+show_percentage = false
+
+[node name="Stat3" type="HBoxContainer" parent="GarageModal/VBox/StatsBox"]
+layout_mode = 2
+
+[node name="Lbl" type="Label" parent="GarageModal/VBox/StatsBox/Stat3"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "ARMOR"
+
+[node name="Bar" type="ProgressBar" parent="GarageModal/VBox/StatsBox/Stat3"]
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+size_flags_horizontal = 3
+value = 75.0
+show_percentage = false
+
+[node name="Stat4" type="HBoxContainer" parent="GarageModal/VBox/StatsBox"]
+layout_mode = 2
+
+[node name="Lbl" type="Label" parent="GarageModal/VBox/StatsBox/Stat4"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "NITRO FLOW"
+
+[node name="Bar" type="ProgressBar" parent="GarageModal/VBox/StatsBox/Stat4"]
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+size_flags_horizontal = 3
+value = 88.0
+show_percentage = false
+
+[node name="CloseGarageButton" type="Button" parent="GarageModal/VBox"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "BACK TO MENU"
+
+[node name="SettingsModal" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -140.0
+offset_right = 220.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_MenuModal")
+
+[node name="VBox" type="VBoxContainer" parent="SettingsModal"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="SettingsTitle" type="Label" parent="SettingsModal/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "SETTINGS"
+horizontal_alignment = 1
+
+[node name="ShakeCheck" type="CheckBox" parent="SettingsModal/VBox"]
+layout_mode = 2
+button_pressed = true
+text = "Screen Camera Shake"
+
+[node name="ResetSaveButton" type="Button" parent="SettingsModal/VBox"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.4, 0.4, 1)
+text = "↺ RESET SAVE DATA"
+
+[node name="CloseSettingsButton" type="Button" parent="SettingsModal/VBox"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+text = "SAVE & CLOSE"

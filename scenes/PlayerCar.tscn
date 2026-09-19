@@ -1,0 +1,217 @@
+[gd_scene load_steps=22 format=3]
+
+[ext_resource type="Script" path="res://scripts/player_controller.gd" id="1_pc"]
+[ext_resource type="Script" path="res://scripts/tire_marks.gd" id="2_tm"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_col"]
+size = Vector3(1.6, 0.9, 3.4)
+
+[sub_resource type="StandardMaterial3D" id="Mat_CarOrange"]
+albedo_color = Color(1, 0.286275, 0, 1)
+metallic = 0.35
+roughness = 0.25
+
+[sub_resource type="BoxMesh" id="BoxMesh_LowerBody"]
+material = SubResource("Mat_CarOrange")
+size = Vector3(1.5, 0.45, 3.3)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Glass"]
+albedo_color = Color(0.0470588, 0.0627451, 0.0901961, 1)
+metallic = 0.7
+roughness = 0.1
+
+[sub_resource type="BoxMesh" id="BoxMesh_Cabin"]
+material = SubResource("Mat_Glass")
+size = Vector3(1.15, 0.38, 1.6)
+
+[sub_resource type="StandardMaterial3D" id="Mat_DarkTrim"]
+albedo_color = Color(0.0980392, 0.117647, 0.14902, 1)
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_Spoiler"]
+material = SubResource("Mat_DarkTrim")
+size = Vector3(1.4, 0.08, 0.35)
+
+[sub_resource type="BoxMesh" id="BoxMesh_SpoilerLeg"]
+material = SubResource("Mat_DarkTrim")
+size = Vector3(0.08, 0.25, 0.12)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Headlights"]
+albedo_color = Color(0.6, 0.9, 1, 1)
+emission_enabled = true
+emission = Color(0.5, 0.85, 1, 1)
+emission_energy_multiplier = 3.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_Headlight"]
+material = SubResource("Mat_Headlights")
+size = Vector3(0.35, 0.1, 0.08)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Taillights"]
+albedo_color = Color(1, 0.08, 0.2, 1)
+emission_enabled = true
+emission = Color(1, 0.05, 0.15, 1)
+emission_energy_multiplier = 4.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_Taillight"]
+material = SubResource("Mat_Taillights")
+size = Vector3(1.3, 0.1, 0.08)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Wheel"]
+albedo_color = Color(0.07, 0.08, 0.1, 1)
+roughness = 0.8
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_Wheel"]
+material = SubResource("Mat_Wheel")
+top_radius = 0.32
+bottom_radius = 0.32
+height = 0.24
+radial_segments = 12
+
+[sub_resource type="StandardMaterial3D" id="Mat_Shadow"]
+transparency = 1
+albedo_color = Color(0.02, 0.03, 0.05, 0.45)
+shading_mode = 0
+
+[sub_resource type="QuadMesh" id="QuadMesh_Shadow"]
+material = SubResource("Mat_Shadow")
+size = Vector2(1.8, 3.6)
+orientation = 1
+
+[sub_resource type="StandardMaterial3D" id="Mat_Smoke"]
+transparency = 1
+albedo_color = Color(0.8, 0.85, 0.9, 0.25)
+shading_mode = 0
+
+[sub_resource type="StandardMaterial3D" id="Mat_Fire"]
+transparency = 1
+albedo_color = Color(0.2, 0.7, 1, 0.85)
+emission_enabled = true
+emission = Color(0.1, 0.6, 1, 1)
+emission_energy_multiplier = 5.0
+shading_mode = 0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_CloseCall"]
+height = 1.5
+radius = 2.8
+
+[node name="PlayerCar" type="CharacterBody3D" groups=["player"]]
+collision_layer = 1
+collision_mask = 6
+script = ExtResource("1_pc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_col")
+
+[node name="ModelRoot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+
+[node name="Shadow" type="MeshInstance3D" parent="ModelRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.33, 0)
+mesh = SubResource("QuadMesh_Shadow")
+
+[node name="Body" type="MeshInstance3D" parent="ModelRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+mesh = SubResource("BoxMesh_LowerBody")
+
+[node name="Cockpit" type="MeshInstance3D" parent="ModelRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, -0.2)
+mesh = SubResource("BoxMesh_Cabin")
+
+[node name="SpoilerBar" type="MeshInstance3D" parent="ModelRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 1.45)
+mesh = SubResource("BoxMesh_Spoiler")
+
+[node name="SpoilerLegL" type="MeshInstance3D" parent="ModelRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, 0.35, 1.45)
+mesh = SubResource("BoxMesh_SpoilerLeg")
+
+[node name="SpoilerLegR" type="MeshInstance3D" parent="ModelRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0.35, 1.45)
+mesh = SubResource("BoxMesh_SpoilerLeg")
+
+[node name="HeadlightL" type="MeshInstance3D" parent="ModelRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.15, -1.65)
+mesh = SubResource("BoxMesh_Headlight")
+
+[node name="HeadlightR" type="MeshInstance3D" parent="ModelRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.15, -1.65)
+mesh = SubResource("BoxMesh_Headlight")
+
+[node name="Taillight" type="MeshInstance3D" parent="ModelRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18, 1.65)
+mesh = SubResource("BoxMesh_Taillight")
+
+[node name="WheelFL" type="MeshInstance3D" parent="ModelRoot"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.75, 0, -1.05)
+mesh = SubResource("CylinderMesh_Wheel")
+
+[node name="WheelFR" type="MeshInstance3D" parent="ModelRoot"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.75, 0, -1.05)
+mesh = SubResource("CylinderMesh_Wheel")
+
+[node name="WheelRL" type="MeshInstance3D" parent="ModelRoot"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.75, 0, 1.05)
+mesh = SubResource("CylinderMesh_Wheel")
+
+[node name="WheelRR" type="MeshInstance3D" parent="ModelRoot"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.75, 0, 1.05)
+mesh = SubResource("CylinderMesh_Wheel")
+
+[node name="ShieldMesh" type="MeshInstance3D" parent="ModelRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+visible = false
+mesh = SubResource("BoxMesh_Cabin")
+
+[node name="LeftSmoke" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, 0.1, 1.2)
+emitting = false
+amount = 18
+lifetime = 0.45
+material_override = SubResource("Mat_Smoke")
+direction = Vector3(0, 0.5, 1)
+spread = 25.0
+initial_velocity_min = 2.0
+initial_velocity_max = 4.0
+scale_amount_min = 0.3
+scale_amount_max = 0.7
+
+[node name="RightSmoke" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0.1, 1.2)
+emitting = false
+amount = 18
+lifetime = 0.45
+material_override = SubResource("Mat_Smoke")
+direction = Vector3(0, 0.5, 1)
+spread = 25.0
+initial_velocity_min = 2.0
+initial_velocity_max = 4.0
+scale_amount_min = 0.3
+scale_amount_max = 0.7
+
+[node name="NitroFlames" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 1.7)
+emitting = false
+amount = 24
+lifetime = 0.25
+material_override = SubResource("Mat_Fire")
+direction = Vector3(0, 0, 1)
+spread = 12.0
+initial_velocity_min = 6.0
+initial_velocity_max = 10.0
+scale_amount_min = 0.2
+scale_amount_max = 0.5
+
+[node name="TireMarksLeft" type="Node3D" parent="."]
+script = ExtResource("2_tm")
+
+[node name="TireMarksRight" type="Node3D" parent="."]
+script = ExtResource("2_tm")
+
+[node name="CloseCallArea" type="Area3D" parent="." groups=["close_call_zone"]]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CloseCallArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CylinderShape3D_CloseCall")
